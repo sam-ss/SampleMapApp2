@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LiveMapApp2.Views.UnitListPage"
+             xmlns:local="clr-namespace:LiveMapApp2.Selectro"
+              xmlns:vm="clr-namespace:LiveMapApp2.ViewModels">
+    <ContentPage.BindingContext>
+        <vm:UnitListViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="NormalTemplate">
+                <ViewCell>
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label  Grid.Column="0"  Grid.Row="0" Text="UNIT NAME" FontAttributes="Bold" TextColor=" #CBA052"  VerticalOptions="Start" HorizontalOptions="Start"  />
+                            <Label Grid.Column="0"  Grid.Row="1" Text="Contact Name:" VerticalOptions="CenterAndExpand" HorizontalOptions="Start" TextColor="Gray"/>
+                            <Label Grid.Column="0"  Grid.Row="2" Text="Unit Status:" VerticalOptions="CenterAndExpand" HorizontalOptions="Start" TextColor="Gray"/>
+                            <Label Grid.Column="0"  Grid.Row="3" Text="MOF Completed:" VerticalOptions="CenterAndExpand" HorizontalOptions="Start" TextColor="Gray"/>
+                        </Grid>
+                        <BoxView HeightRequest="2" BackgroundColor="Gray" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+
+            <DataTemplate x:Key="UnitGroupTemplate">
+                <ViewCell >
+                    <Grid BackgroundColor="Red" VerticalOptions="Start">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/> 
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0"  BackgroundColor="SkyBlue">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                                    <Label Text="Unit Group" FontAttributes="Bold" TextColor=" #CBA052"/> 
+                                    <Button Text="+" x:Name="toggleButton" Clicked="TapGestureRecognizer_Tapped"> 
+                                    </Button> 
+                                </StackLayout>
+                                <BoxView Grid.Column="0" Grid.Row="1"  HeightRequest="1" BackgroundColor="LightGray" />
+                                <StackLayout x:Name="ContentSubStack" Grid.Column="0" Grid.Row="2">
+                                    <StackLayout.Triggers>
+                                        <MultiTrigger TargetType="StackLayout">
+                                            <MultiTrigger.Conditions>
+                                                <BindingCondition Binding="{Binding Source={x:Reference toggleButton}, Path=Text}" Value="-" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </MultiTrigger>
+                                        <MultiTrigger TargetType="StackLayout">
+                                            <MultiTrigger.Conditions>
+                                                <BindingCondition Binding="{Binding Source={x:Reference toggleButton}, Path=Text}" Value="+" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </MultiTrigger>
+                                    </StackLayout.Triggers>
+                                    <StackLayout Orientation="Vertical" BindableLayout.ItemsSource="{Binding UnitList}" >
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate> 
+                                                <StackLayout Padding="20,2,5,2">
+                                                    <Label Text="{Binding .}" FontAttributes="Bold" TextColor=" #CBA052"/>
+                                                    <!--<Label "/>-->
+                                                    <Label Text="Contact Name:"/>
+                                                    <Label Text="Unit Status:"/>
+                                                    <Label Text="MOF Completed:"/>
+                                                </StackLayout>
+
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        <BoxView Grid.Row="1"  HeightRequest="2" BackgroundColor="Gray" />
+                        </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <local:TemplateSelector x:Key="templateSelector"
+                                           NormalTemplate="{StaticResource NormalTemplate}"
+                                           UnitGroupTemplate="{StaticResource UnitGroupTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout >
+                <ListView HasUnevenRows="True" Margin="10"
+                       x:Name="UnitListView"
+                        SeparatorVisibility="None" ItemAppearing="ListView_ItemAppearing"
+                          ItemsSource="{Binding UnitModelSelectors}"
+                     ItemTapped="ListView_ItemTapped"
+                   ItemTemplate="{StaticResource templateSelector}">
+                </ListView>
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>    
+    <!--<ListView  Grid.Column="0" Grid.Row="2" ItemsSource="{Binding UnitList}" ItemSelected="ListView_ItemSelected" HasUnevenRows="True" SeparatorVisibility="None">
+                                    <ListView.ItemTemplate >
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <StackLayout Padding="20,2,5,2">
+                                                    <Label Text="{Binding .}" FontAttributes="Bold" TextColor=" #CBA052"/>  
+                                                    <Label Text="Contact Name:"/>
+                                                    <Label Text="Unit Status:"/>
+                                                    <Label Text="MOF Completed:"/>
+                                                </StackLayout>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>-->

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="currentPage"
+           xmlns:vm="clr-namespace:LiveMapApp2.ViewModels"
+              xmlns:local="clr-namespace:LiveMapApp2.Selectro"
+              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             x:Class="LiveMapApp2.Views.UnitGroupList" BackgroundColor="White">
+    <ContentPage.BindingContext>
+        <vm:UnitListViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Normal Template-->
+            <DataTemplate x:Key="NormalTemplate">
+                <StackLayout x:Name="UnitStack" BackgroundColor="LightGreen">
+                    <!--<StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UnitSelectedCommand}" CommandParameter="{Binding .}"/>
+                    </StackLayout.GestureRecognizers>-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label  Grid.Column="0"  Grid.Row="0" Text="UNIT NAME" FontAttributes="Bold" TextColor=" #CBA052"  VerticalOptions="Start" HorizontalOptions="Start"  />
+                        <Label  Grid.Column="0"  Grid.Row="1" Text="{Binding ContractNumber, StringFormat='Contract Number : {0:N}'}" HorizontalOptions="Start" TextColor="#041E42"/>
+                        <Label Grid.Column="0"  Grid.Row="2" Text="{Binding UnitStatus, StringFormat='Unit Status : {0:N}'}" HorizontalOptions="Start" TextColor="#041E42"/>
+                        <Label Grid.Column="0"  Grid.Row="3" Text="{Binding MOFCompleted, StringFormat='MOF Completed : {0:N}'}" HorizontalOptions="Start" TextColor="#041E42"/>
+                        <StackLayout Grid.Column="0"  Grid.Row="4" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Button Text="Yes" BorderWidth="1" WidthRequest="50" HeightRequest="30" CornerRadius="0" Clicked="Button_Clicked"/>
+                            <Button Text="No"  BorderWidth="1" WidthRequest="50" HeightRequest="30" CornerRadius="0" Clicked="Button_Clicked"/>
+                            <Button Text="N/A" BorderWidth="1" WidthRequest="50" HeightRequest="30" CornerRadius="0" Clicked="Button_Clicked"/>
+                         
+                        </StackLayout>
+                    </Grid>
+                    <BoxView HeightRequest="2" BackgroundColor="Gray" />
+                </StackLayout>
+            </DataTemplate>
+
+            <!--Unit Group Template-->
+            <DataTemplate x:Key="UnitGroupTemplate">
+
+                <Grid  VerticalOptions="Start" BackgroundColor="LightSalmon">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!--<RowDefinition Height="Auto"/>-->
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Horizontal" >
+                            <Label Text="Unit Group" FontAttributes="Bold" TextColor=" #CBA052" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                            <Button Text="-" x:Name="toggleButton" HorizontalOptions="EndAndExpand" BackgroundColor="White" HeightRequest="20" FontSize="Medium" TextColor="#F65275" Clicked="TapGestureRecognizer_Tapped" VerticalOptions="Center"/>
+
+                        </StackLayout>
+
+                        <StackLayout x:Name="ContentSubStack" Grid.Column="0" Grid.Row="1">
+                            <StackLayout.Triggers>
+                                <MultiTrigger TargetType="StackLayout">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference toggleButton}, Path=Text}" Value="-" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="True" />
+                                </MultiTrigger>
+                                <MultiTrigger TargetType="StackLayout">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference toggleButton}, Path=Text}" Value="+" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="False" />
+                                </MultiTrigger>
+                            </StackLayout.Triggers>
+                            <BoxView  HeightRequest="1" BackgroundColor="LightGray" />
+
+                            <StackLayout Orientation="Vertical" BindableLayout.ItemsSource="{Binding UnitGroupList}"   BindableLayout.ItemTemplateSelector="{StaticResource templateSelector}"  Padding="20,2,5,2">
+                                
+                                <!--<BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Padding="20,2,5,2">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding UnitSelectedCommand}" CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                                            </StackLayout.GestureRecognizers>
+                                           
+                                            <Label Text="UNIT NAME" FontAttributes="Bold" TextColor=" #CBA052"/>
+                                            <Label Text="{Binding ContractNumber, StringFormat='Contract Number : {0:N}'}" HorizontalOptions="Start" TextColor="#041E42"/>
+                                            <Label Text="{Binding UnitStatus, StringFormat='Unit Status : {0:N}'}" HorizontalOptions="Start" TextColor="#041E42"/>
+                                            <Label Text="{Binding MOFCompleted, StringFormat='MOF Completed : {0:N}'}" HorizontalOptions="Start" TextColor="#041E42"/>
+                                        </StackLayout>
+
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>-->
+
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                    <!--<BoxView Grid.Row="1"  HeightRequest="2" BackgroundColor="Gray" />-->
+                </Grid>
+
+            </DataTemplate>
+            <local:TemplateSelector x:Key="templateSelector"
+                                           NormalTemplate="{StaticResource NormalTemplate}"
+                                           UnitGroupTemplate="{StaticResource UnitGroupTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout  Margin="10" Orientation="Vertical" BindableLayout.ItemsSource="{Binding UnitModelSelectors}" 
+                             BindableLayout.ItemTemplateSelector="{StaticResource templateSelector}" />
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>    

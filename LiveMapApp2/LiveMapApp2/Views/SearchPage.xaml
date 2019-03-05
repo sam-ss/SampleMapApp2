@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LiveMapApp2.ViewModels"
+             xmlns:controls="clr-namespace:LiveMapApp2.CustomViews"
+             x:Class="LiveMapApp2.Views.SearchPage">
+    <ContentPage.BindingContext>
+        <vm:SearchViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical"> 
+        <Grid VerticalOptions="Start" ColumnSpacing="0" Padding="10,5,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> 
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Grid.Row="0" Source="searchicon" HorizontalOptions="Start" Aspect="AspectFill">
+                <Image.GestureRecognizers>
+                        <TapGestureRecognizer  NumberOfTapsRequired="1" Command="{Binding SearchTextCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
+                <Entry Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" Placeholder="Search project, Address" IsVisible="{Binding IsSearchBoxVisable}" Text="{Binding SearchBoxText}" />
+        </Grid> 
+            <StackLayout>
+            <controls:ExtSearchBar  
+                Placeholder="Search for an item" 
+                Text="{ Binding SearchText }"
+                TextChangedDelay="550"
+                TextChangedCommand="{ Binding SearchCommand }"
+                SearchCommand="{ Binding SearchCommand }"
+                VerticalOptions="Start"
+                HasFilterIcon="True" 
+                FilterCommand="{ Binding FilterTappedCommand }" />
+            </StackLayout>
+            
+            
+            <StackLayout>
+                <controls:CustomSearchView BorderColor="#6D6E84" Placeholder="Search" IsSearchbarVisible="True" SearchTextChangeCommand="{Binding SearchTextChangeCommand }"/>
+            </StackLayout>
+            <StackLayout>
+                <controls:CustomSearchView BorderColor="#6D6E84" Source="searchicon" Placeholder="Search" IsSearchbarVisible="False"  SearchTextChangeCommand="{Binding SearchTextChangeCommand }"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

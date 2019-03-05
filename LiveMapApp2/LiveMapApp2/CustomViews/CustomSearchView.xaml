@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LiveMapApp2.CustomViews.CustomSearchView" x:Name="Root">
+  <ContentView.Content>
+        <Grid VerticalOptions="StartAndExpand" ColumnSpacing="0" Padding="10,5,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="{Binding Source={x:Reference Root}, Path= Source}" Margin="0" HorizontalOptions="Start" Aspect="AspectFill" BackgroundColor="Red">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                </Image.GestureRecognizers>
+                
+            </Image>
+            <Frame Grid.Column="1" CornerRadius="0" BorderColor="{Binding Source={x:Reference Root}, Path= BorderColor}" HasShadow="False"  Padding="0" Margin="0" x:Name="EntryFrame">
+                <!--IsVisible="{Binding Source={x:Reference Root}, Path=IsSearchbarVisable}" >-->
+                <Entry HorizontalOptions="FillAndExpand"  x:Name="SearchEntry"
+                       Placeholder="{Binding Source={x:Reference Root}, Path=Placeholder}" 
+                       TextColor="{Binding Source={x:Reference Root}, Path=TextColor}" 
+                       Style="{Binding Source={x:Reference Root}, Path=EntryStyle}" 
+                       Text="{Binding Source={x:Reference Root}, Path=Text}"
+                       TextChanged="SearchEntry_TextChanged"
+                />
+
+            </Frame>
+        </Grid>
+  </ContentView.Content>
+</ContentView>

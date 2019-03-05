@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LiveMapApp2.MapMainPage"
+                     xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+    <ContentPage.Content>
+        <!--<Grid>
+        <StackLayout x:Name="MainStack">
+            <maps:Map 
+            x:Name="map"
+            IsShowingUser="true"
+            MapType="Hybrid"/>
+        </StackLayout>
+        </Grid>-->
+
+        <Grid
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="240" />
+            </Grid.RowDefinitions> 
+            <AbsoluteLayout
+                Grid.Row="1">
+                <maps:Map   
+                    x:Name="map"
+            IsShowingUser="true"
+            MapType="Hybrid"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags="All"/>
+            </AbsoluteLayout>
+            <Grid
+                Grid.Row="2"
+                BackgroundColor="white">
+                <StackLayout
+                    Margin="0, 5, 0, 0" BackgroundColor="Red">
+                </StackLayout>
+            </Grid>
+           
+        </Grid>
+
+        <!--<AbsoluteLayout>
+            --><!-- MAP --><!--
+            <maps:Map 
+              x:Name="map"
+                IsShowingUser="true"
+            MapType="Hybrid"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0, 0, 1.0, 1.0"  
+            IsVisible="True">
+            </maps:Map>
+            --><!-- ROUTE SELECTOR --><!--
+            <Grid
+            x:Name="RouteSelector"
+            Margin="12"
+            AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+            AbsoluteLayout.LayoutBounds="0.1, 0, 1.0, 230">
+                <Grid.Triggers>
+                    <DataTrigger 
+                            TargetType="Grid"
+                            Binding="{Binding ShowInfo}"
+                            Value="True">
+                        <Setter Property="BackgroundColor"
+                            Value="Transparent" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Grid.BackgroundColor>
+                    <OnPlatform 
+                        x:TypeArguments="Color" 
+                        Android="Transparent"
+                        iOS="White" 
+                       />
+                </Grid.BackgroundColor>
+                 
+                <RelativeLayout
+                IsVisible="True">
+                    <StackLayout 
+                    x:Name="Menu"
+                    Padding="12"
+                    BackgroundColor="White"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression
+                        Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression
+                        Type=RelativeToParent,Property=Height,Factor=1,Constant=-48}">
+                      
+                    </StackLayout>
+                    --><!-- GO Button Container --><!--
+                    <Grid 
+					x:Name="GoButtonContainer"
+                    IsVisible="True"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression
+                        Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+                        ElementName=Menu,Property=Height,Factor=1,Constant=0}">
+                        --><!--<Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                            Command="{Binding GoCommand}"    
+                            Tapped="Go"
+                            NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>--><!--
+                        <Grid.BackgroundColor>
+                            <OnPlatform 
+                                x:TypeArguments="Color" 
+                                Android="Transparent"
+								iOS="Gray"
+                                 />
+                        </Grid.BackgroundColor>
+                        <Grid.HeightRequest>
+                            <OnPlatform 
+                            x:TypeArguments="x:Double" 
+                            iOS="32"
+                            Android="96"  />
+                        </Grid.HeightRequest>
+                        --><!-- iOS Go Button --><!--
+                        <Grid>
+                            <Grid.IsVisible>
+                                <OnPlatform 
+                                x:TypeArguments="x:Boolean" 
+                                iOS="True"
+                                Android="False"  />
+                            </Grid.IsVisible>
+                            <Label
+			                Text="Go" 
+			                TextColor="AliceBlue"
+			                FontSize="Large"
+			                FontAttributes="Bold"
+			                HorizontalOptions="End"     
+			              
+			                Margin="12, 0" />
+                        </Grid>
+                    
+                      
+                    </Grid>
+                </RelativeLayout>
+
+            </Grid>
+            --><!-- INFO PANEL --><!--
+            <Grid   
+            x:Name="InfoPanel"
+            IsVisible="True"
+            Margin="12"
+            AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+            AbsoluteLayout.LayoutBounds="0.0, 1.0, 1.0, AutoSize">
+                <StackLayout
+                x:Name="InfoPanelContent"
+                Spacing="0"
+                    HeightRequest="30"
+                IsVisible="True" BackgroundColor="Red">
+                  
+                </StackLayout>
+            </Grid>
+            --><!-- RIDE SUMMARY --><!--
+            <Grid   
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0"           
+            BackgroundColor="Blue"
+            IsVisible="False">
+                <Grid.Padding>
+                    <OnPlatform 
+                    x:TypeArguments="Thickness" 
+                    iOS="12, 48, 12, 12"
+                    Android="12, 12, 12, 12"
+                     />
+                </Grid.Padding>
+                <StackLayout     />
+            </Grid>
+            --><!-- ACTIVITY INDICATOR -->
+            <!--<Grid
+            IsVisible="{Binding IsBusy}"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0">
+                <ActivityIndicator
+            Color="{StaticResource BlueColor}"
+            IsRunning="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                    <ActivityIndicator.WidthRequest>
+                        <OnPlatform 
+                        x:TypeArguments="x:Double" 
+                        iOS="100" 
+                        Android="100"
+                        />
+                    </ActivityIndicator.WidthRequest>
+                </ActivityIndicator>
+            </Grid>--><!--
+        </AbsoluteLayout>-->
+
+
+
+    </ContentPage.Content>
+</ContentPage>
